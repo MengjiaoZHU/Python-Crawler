@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>搜索 - {% block title %}solr{% endblock %}</title>
+    </head>
+
+    <body>
+        <div align="center">
+            {% block banner %}
+              <h1>基于Django+solr的搜索引擎</h1>
+            {% endblock %}
+            {% block body_block %}
+                {% if basic_form %}
+                <form id="basic_form" method="post" action="{% url 'search' %}" align="left">
+
+                    {% csrf_token %}
+                    {% for hidden in basic_form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+        
+                    {% for field in basic_form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text }}
+                        {{ field }}
+                        <br>
+                    {% endfor %}
+                
+                <input type="submit" name="submit" value="solr_search" />
+                <br />
+                <p>------------------------------------------------------------</p>
+                <br />
+                {% endif %}
+                <form id="adv_form" method="post" action="{% url 'search' %}" align="left">
+
+                    {% csrf_token %}
+                    {% for hidden in adv_form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+        
+                    {% for field in adv_form.visible_fields %}
+                        {{ field.errors }}
+                        {{ field.help_text }}
+                        {{ field }}
+                        <br>
+                    {% endfor %}
+
+                {% if error_flag %}
+                    <strong>*请输入正确的时间范围</strong>
+                    <br />
+                {% endif %}
+                <input type="submit" name="submit" value="solr_search" />
+            {% endblock %}
+        </div>
+
+        <hr />
+        
+        {% block result_show %}
+        <div>
+            {% if num == 0 %}
+              <strong><<<没有查询到结果</strong>
+            {% endif %}
+            {% if result %}
+              {% for i in result %}
+              <table border = 1 align="center" width=800>
+                  <tr>
+                      <td>标题(点击查看详情)</rd>
+                      <td><a href="{% url 'detail' i.md5 %}" target="_blank">{{ i.title }}</a></td>
+                  </tr>
+                  <tr>
+                      <td>时间</td>
+                      <td>{{ i.date }} - {{ i.time }}</td>
+                  </tr>
+                  <tr>
+                      <td>源地址</td>
+                      <td>{{ i.link }}</td>
+                  </tr>
+              </table>
+                <br />
+              {% endfor %}
+            {% endif %}
+            {% if last %}
+              <p  align="center"><a href="{% url 'jumppage' last %}" align="center"><上一页></a></p>
+            {% endif %}
+            {% if next %}
+              <p  align="center"><a href="{% url 'jumppage' next %}" align="center">下一页></a></p>
+            {% endif %}
+            <ul>
+                <li><a href="{% url 'about' %}">关于</a></li>
+            </ul>
+        </div>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,69 @@
+﻿{% extends 'solr/index.html' %}
+
+{% load staticfiles %}
+
+{% block result_show %}
+        <div>
+            {% if result %}
+              <table border = 1 align="center" width=800>
+                  <tr>
+                      <td>标题</rd>
+                      <td>{{ result.title }}</td>
+                  </tr>
+                  <tr>
+                      <td>时间</td>
+                      <td>{{ result.date }} - {{ resulti.time }}</td>
+                  </tr>
+                  <tr>
+                      <td>源地址</td>
+                      <td>{{ result.link }}</td>
+                  </tr>
+                  <tr>
+                      <td>分类</td>
+                      <td>{{ result.category }}</td>
+                  </tr>
+                  <tr>
+                      <td>分类具体信息</td>
+                      <td>{{ result.detailcategory }}</td>
+                  </tr>
+                  <tr>
+                      <td>城市</td>
+                      <td>{{ result.city }}</td>
+                  </tr>
+                  <tr>
+                      <td>地点</td>
+                      <td>{{ result.place }}</td>
+                  </tr>
+                  <tr>
+                      <td>图片地址</td>
+                      <td>{{ result.image }}</td>
+                  </tr>
+                  <tr>
+                      <td>价格(元)</td>
+                      <td>{{ result.fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>费用列表</td>
+                      <td>{{ result.feeList }}</td>
+                  </tr>
+                  <tr>
+                      <td>创建时间</td>
+                      <td>{{ result.createdtime }}</td>
+                  </tr>
+                  <tr>
+                      <td>描述</td>
+                      <td>{{ result.desc }}</td>
+                  </tr>
+                  <tr>
+                      <td>MD5</td>
+                      <td>{{ result.md5 }}</td>
+                  </tr>
+              </table>
+                <br />
+            {% endif %}
+            <ul>
+                <li><a href="{% url 'about' %}">关于</a></li>
+            </ul>
+        </div>
+
+{% endblock %}
